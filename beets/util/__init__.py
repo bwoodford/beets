@@ -413,6 +413,8 @@ def bytestring_path(path: PathLike) -> bytes:
     # Try to encode with default encodings, but fall back to utf-8.
     try:
         return str_path.encode(_fsencoding())
+    except (UnicodeEncodeError):
+        return str_path.encode("utf-8", "surrogateescape")
     except (UnicodeError, LookupError):
         return str_path.encode("utf-8")
 
